@@ -8,6 +8,7 @@ import { ListEmpty } from '@components/ListEmpty';
 import { Container } from './styles';
 import { useState } from 'react';
 import { FlatList } from 'react-native';
+import { Button } from '@components/Button';
 
 
 export function Groups() {
@@ -43,6 +44,10 @@ export function Groups() {
         )}
     
 
+      />
+
+      <Button 
+        title='Criar nova turma'
       />
 
       

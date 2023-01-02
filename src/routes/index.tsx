@@ -13,7 +13,6 @@ export function Routes() {
                 <AppRoutes />
             </NavigationContainer>
 
-
         </View>
     )
 }

@@ -71,10 +71,10 @@ export function Players() {
         }
     }
 
-    async function handlePlayerRemove(playerName:string) {
-       
+
+    async function playerRemove(playerName:string) {
         try {
-            
+                
             await playerRemoveByGroup(playerName,group)
             fetchPlayersByTeam()
         } catch (error) {
@@ -82,6 +82,30 @@ export function Players() {
             console.log(error)
         }
     }
+
+
+
+     function handlePlayerRemove(playerName:string) {
+       
+        Alert.alert("Remover", "Deseja remover essa pessoa?",[
+            {
+              text: 'Sim',
+              onPress:( ()=> 
+                playerRemove(playerName)
+
+              )
+      
+            },
+            {
+              text: 'Não',
+              style: 'cancel'
+            }
+          ])
+
+       
+    }
+
+ 
 
 
     useEffect(()=> {

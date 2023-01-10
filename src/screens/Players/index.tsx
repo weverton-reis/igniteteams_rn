@@ -7,7 +7,8 @@ import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
 import { ListEmpty } from "@components/ListEmpty";
 import { PlayerCard } from "@components/PlayerCard";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { groupRemoveByName } from "@storage/group/groupRemobeByName";
 import { playerAddByGroup } from "@storage/player/playerAddByGroup";
 import { playerRemoveByGroup } from "@storage/player/playerRemoveByGroup";
 import { playersGetByGroupByTeam } from "@storage/player/playersGetByGroupByTeam";
@@ -31,6 +32,8 @@ export function Players() {
     const {group}= route.params as RouteParams
 
     const newPlayerNameInputRef = useRef<TextInput>(null)
+
+    const navigation = useNavigation();
 
     async function handleAddPlayer() {
         if(newPlayerName.trim().length === 0){
@@ -103,6 +106,32 @@ export function Players() {
           ])
 
        
+    }
+
+    async function groupRemove() {
+        try {
+            await groupRemoveByName(group)    
+            navigation.navigate("groups")
+        } catch (error) {
+            Alert.alert("Remover grupo", "Não foi possível remover esse grupo.")
+            console.log(error)
+        }
+    }
+
+
+
+    function handleRemoveGroup() {
+        Alert.alert("Remover", "Deseja remover esse grupo?",[
+            {
+              text: 'Sim',
+              onPress:( ()=> groupRemove())
+            },
+            {
+              text: 'Não',
+              style: 'cancel'
+            }
+          ])
+
     }
 
  
@@ -191,6 +220,7 @@ export function Players() {
             <Button
                 type="SECONDARY"
                 title="Remover turma"
+                onPress={handleRemoveGroup}
             
             />
 

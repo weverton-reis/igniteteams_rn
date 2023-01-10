@@ -9,11 +9,10 @@ import { ListEmpty } from "@components/ListEmpty";
 import { PlayerCard } from "@components/PlayerCard";
 import { useRoute } from "@react-navigation/native";
 import { playerAddByGroup } from "@storage/player/playerAddByGroup";
-import { playersGetByGroup } from "@storage/player/playersGetByGroup";
 import { playersGetByGroupByTeam } from "@storage/player/playersGetByGroupByTeam";
 import { PlayerStorageDTO } from "@storage/player/PlayerStorageDTO";
 import { AppError } from "@utils/AppError";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, FlatList } from "react-native";
 import { Container, Form, HeaderList, NumberOfPlayers } from "./styles";
 
@@ -43,7 +42,8 @@ export function Players() {
 
         try {
             await playerAddByGroup(newPlayer, group)
-        
+            fetchPlayersByTeam()
+            
 
         } catch (error) {
             if(error instanceof AppError){
@@ -67,7 +67,9 @@ export function Players() {
     }
 
 
-
+    useEffect(()=> {
+        fetchPlayersByTeam();
+    },[team]);
 
     return (
         <Container>
@@ -118,10 +120,10 @@ export function Players() {
 
             <FlatList
                 data={players}
-                keyExtractor={item => item} 
+                keyExtractor={item => item.name} 
                 renderItem={({item} )=> (
                     <PlayerCard
-                        name={item}
+                        name={item.name}
                         onRemove={() => {}}
                     />
                 )}  

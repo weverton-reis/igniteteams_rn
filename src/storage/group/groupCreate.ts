@@ -3,7 +3,7 @@ import { GROUP_COLLECTION } from "@storage/storageConfig";
 import { AppError } from "@utils/AppError";
 import { groupsGetAll } from "./groupsGetAll";
 
-export async function groupCreate(newGroup: string) {
+export async function groupCreate(newGroup:string) {
     try {
         const storedGroups = await groupsGetAll();
 
